@@ -219,18 +219,6 @@ Si hay errores específicos de FFmpeg, el script mostrará el mensaje de error d
 - [x] Drag & drop para subida de archivos
 - [x] Descarga directa de archivos convertidos
 
-### 🚧 Versión 2.0 (En desarrollo)
-- [ ] Conversión por lotes (batch processing)
-- [ ] Presets predefinidos para casos comunes
-- [ ] Compresión inteligente automática
-- [ ] API REST para integración con otras aplicaciones
-
-### 🔮 Futuras versiones
-- [ ] Soporte para subtítulos
-- [ ] Compresión inteligente
-- [ ] Integración con servicios en la nube
-- [ ] Plugin para editores de video populares
-
 ## 📝 Licencia
 
 Este proyecto es de código abierto y está disponible bajo la licencia MIT.
