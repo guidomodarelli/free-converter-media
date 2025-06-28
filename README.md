@@ -52,13 +52,13 @@ python run.py -i music.m4a -f wav
 python run.py -i audio.wav -f mp3 -q 128k
 ```
 
-#### 🎥 Conversión de Video *(próximamente)*
+#### 🎥 Conversión de Video
 ```bash
-# Convertir MP4 a MKV
-python run.py -i video.mp4 -f mkv
+# Convertir AVI a MP4
+python run.py -i video.avi -f mp4
 
-# Convertir AVI a MP4 con calidad específica
-python run.py -i movie.avi -o movie.mp4 -q 720p
+# Convertir MKV a MP4 con resolución específica
+python run.py -i movie.mkv -o movie.mp4 -q 720p
 
 # Convertir MOV a WebM para web
 python run.py -i presentation.mov -f webm
@@ -67,10 +67,10 @@ python run.py -i presentation.mov -f webm
 ### Opciones disponibles
 
 ```
--i, --input       Archivo de audio de entrada (requerido)
+-i, --input       Archivo de audio o video de entrada (requerido)
 -o, --output      Archivo de salida (opcional)
 -f, --format      Formato de salida (default: mp3)
--q, --quality     Calidad del audio - bitrate (default: 192k)
+-q, --quality     Calidad - bitrate para audio (192k) o resolución para video (720p)
 --list-formats    Mostrar formatos soportados
 -h, --help        Mostrar ayuda
 ```
@@ -86,7 +86,7 @@ python run.py -i presentation.mov -f webm
 - **OGG** - Ogg Vorbis
 - **WMA** - Windows Media Audio
 
-#### 🎥 Video *(próximamente)*
+#### 🎥 Video
 - **MP4** - MPEG-4 Video
 - **MKV** - Matroska Video
 - **AVI** - Audio Video Interleave
@@ -94,6 +94,7 @@ python run.py -i presentation.mov -f webm
 - **WebM** - Web Media Format
 - **FLV** - Flash Video
 - **WMV** - Windows Media Video
+- **M4V** - iTunes Video
 
 ### Calidades recomendadas
 
@@ -103,7 +104,7 @@ python run.py -i presentation.mov -f webm
 - **256k** - Calidad alta
 - **320k** - Calidad muy alta (MP3 máxima)
 
-#### 🎥 Video (Resolución) *(próximamente)*
+#### 🎥 Video (Resolución)
 - **480p** - Calidad básica (SD)
 - **720p** - Calidad HD (predeterminado)
 - **1080p** - Calidad Full HD
@@ -153,28 +154,31 @@ Si hay errores específicos de FFmpeg, el script mostrará el mensaje de error d
 ## 🎯 Características
 
 - ✨ Interfaz CLI intuitiva y fácil de usar
-- 🎵 Conversión entre múltiples formatos de audio
-- 🎥 Soporte para formatos de video *(en desarrollo)*
+- 🎵 Conversión completa entre formatos de audio (7 formatos)
+- 🎥 Conversión completa entre formatos de video (8 formatos)
+- 🔍 Detección automática del tipo de media (audio/video)
 - ⚙️ Control de calidad/bitrate para audio y resolución para video
-- 📊 Información del archivo resultante
+- 📊 Información del archivo resultante con tamaño
 - ❌ Manejo de errores robusto y verificación automática
-- 🔧 Basado en FFmpeg para máxima compatibilidad
+- 🔧 Basado en FFmpeg para máxima compatibilidad y calidad
 - 🚀 Perfecto para creadores de contenido, desarrolladores y podcasters
 
 ## 🗺️ Roadmap
 
 ### ✅ Versión 1.0 (Actual)
 - [x] Conversión de formatos de audio
-- [x] Control de calidad/bitrate
-- [x] Interfaz CLI básica
-- [x] Manejo de errores
+- [x] Conversión de formatos de video
+- [x] Control de calidad/bitrate para audio
+- [x] Control de resolución para video
+- [x] Detección automática de tipo de media
+- [x] Interfaz CLI completa
+- [x] Manejo de errores robusto
 
 ### 🚧 Versión 2.0 (En desarrollo)
-- [ ] Soporte completo para formatos de video
-- [ ] Control de resolución y calidad de video
 - [ ] Conversión por lotes (batch processing)
 - [ ] Presets predefinidos para casos comunes
 - [ ] Interfaz web opcional
+- [ ] Compresión inteligente automática
 
 ### 🔮 Futuras versiones
 - [ ] Soporte para subtítulos
