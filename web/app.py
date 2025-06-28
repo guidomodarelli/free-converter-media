@@ -16,8 +16,8 @@ from flask import Flask, render_template, request, jsonify, send_file, flash, re
 # Importar funciones del CLI
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from run import (
-    check_ffmpeg, 
-    get_supported_audio_formats, 
+    check_ffmpeg,
+    get_supported_audio_formats,
     get_supported_video_formats,
     convert_media,
     detect_media_type
@@ -52,7 +52,7 @@ def get_file_info(filepath):
     """Obtiene información del archivo."""
     if not os.path.exists(filepath):
         return None
-    
+
     stat = os.stat(filepath)
     return {
         'size': stat.st_size,
@@ -66,13 +66,13 @@ def index():
     """Página principal."""
     # Verificar FFmpeg
     ffmpeg_available = check_ffmpeg()
-    
+
     formats = {
         'audio': get_supported_audio_formats(),
         'video': get_supported_video_formats()
     }
-    
-    return render_template('index.html', 
+
+    return render_template('index.html',
                          ffmpeg_available=ffmpeg_available,
                          formats=formats)
 
@@ -82,24 +82,24 @@ def upload_file():
     """Maneja la subida de archivos."""
     if 'file' not in request.files:
         return jsonify({'error': 'No se seleccionó ningún archivo'}), 400
-    
+
     file = request.files['file']
     if file.filename == '':
         return jsonify({'error': 'No se seleccionó ningún archivo'}), 400
-    
+
     if file and allowed_file(file.filename):
         # Generar nombre único
         file_id = str(uuid.uuid4())
         original_filename = secure_filename(file.filename)
         file_extension = original_filename.rsplit('.', 1)[1].lower()
         filename = f"{file_id}.{file_extension}"
-        
+
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
-        
+
         # Obtener información del archivo
         file_info = get_file_info(filepath)
-        
+
         return jsonify({
             'success': True,
             'file_id': file_id,
@@ -107,7 +107,7 @@ def upload_file():
             'filename': filename,
             'file_info': file_info
         })
-    
+
     return jsonify({'error': 'Tipo de archivo no permitido'}), 400
 
 
@@ -115,36 +115,36 @@ def upload_file():
 def convert_file():
     """Convierte el archivo al formato especificado."""
     data = request.get_json()
-    
+
     file_id = data.get('file_id')
     output_format = data.get('format')
     quality = data.get('quality', '192k')
-    
+
     if not file_id or not output_format:
         return jsonify({'error': 'Parámetros faltantes'}), 400
-    
+
     # Buscar el archivo de entrada
     input_file = None
     for filename in os.listdir(app.config['UPLOAD_FOLDER']):
         if filename.startswith(file_id):
             input_file = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             break
-    
+
     if not input_file or not os.path.exists(input_file):
         return jsonify({'error': 'Archivo no encontrado'}), 404
-    
+
     # Generar nombre del archivo de salida
     output_filename = f"{file_id}_converted.{output_format}"
     output_file = os.path.join(app.config['DOWNLOAD_FOLDER'], output_filename)
-    
+
     try:
         # Realizar la conversión
         success = convert_media(input_file, output_file, output_format, quality)
-        
+
         if success:
             # Obtener información del archivo convertido
             output_info = get_file_info(output_file)
-            
+
             return jsonify({
                 'success': True,
                 'output_file': output_filename,
@@ -153,7 +153,7 @@ def convert_file():
             })
         else:
             return jsonify({'error': 'Error durante la conversión'}), 500
-            
+
     except Exception as e:
         return jsonify({'error': f'Error inesperado: {str(e)}'}), 500
 
@@ -162,17 +162,17 @@ def convert_file():
 def download_file(filename):
     """Permite descargar el archivo convertido."""
     filepath = os.path.join(app.config['DOWNLOAD_FOLDER'], filename)
-    
+
     if not os.path.exists(filepath):
         return jsonify({'error': 'Archivo no encontrado'}), 404
-    
+
     # Obtener el nombre original sin el prefijo del ID
     display_name = filename.split('_converted.', 1)
     if len(display_name) == 2:
         display_name = f"converted.{display_name[1]}"
     else:
         display_name = filename
-    
+
     return send_file(filepath, as_attachment=True, download_name=display_name)
 
 
@@ -197,10 +197,10 @@ def cleanup_files():
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             if os.path.isfile(filepath):
                 os.remove(filepath)
-        
+
         # Limpiar downloads más antiguos (opcional)
         # Por ahora solo reportamos éxito
-        
+
         return jsonify({'success': True, 'message': 'Archivos temporales limpiados'})
     except Exception as e:
         return jsonify({'error': f'Error al limpiar: {str(e)}'}), 500
@@ -210,7 +210,7 @@ if __name__ == '__main__':
     if not check_ffmpeg():
         print("⚠️  Advertencia: FFmpeg no está instalado. La aplicación web no funcionará correctamente.")
         print("💡 Instala FFmpeg antes de continuar.")
-    
+
     print("🌐 Iniciando Free Media Converter Web Interface...")
     print("📍 Accede a: http://localhost:5001")
     app.run(debug=True, host='0.0.0.0', port=5001)
