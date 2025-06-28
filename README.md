@@ -33,11 +33,23 @@ sudo pacman -S ffmpeg
 brew install ffmpeg
 ```
 
+### Instalación de dependencias Python
+
+```bash
+# Para uso de CLI únicamente (sin dependencias adicionales)
+python run.py --help
+
+# Para usar la interfaz web
+pip install -r requirements.txt
+```
+
 ## 🚀 Uso
 
-### Ejemplos básicos
+### 🖥️ Línea de comandos (CLI)
 
-#### 🎵 Conversión de Audio
+#### Ejemplos básicos
+
+##### 🎵 Conversión de Audio
 ```bash
 # Convertir WAV a MP3 (calidad predeterminada 192k)
 python run.py -i audio.wav -o audio.mp3
@@ -52,7 +64,7 @@ python run.py -i music.m4a -f wav
 python run.py -i audio.wav -f mp3 -q 128k
 ```
 
-#### 🎥 Conversión de Video
+##### 🎥 Conversión de Video
 ```bash
 # Convertir AVI a MP4
 python run.py -i video.avi -f mp4
@@ -64,7 +76,35 @@ python run.py -i movie.mkv -o movie.mp4 -q 720p
 python run.py -i presentation.mov -f webm
 ```
 
-### Opciones disponibles
+### 🌐 Interfaz Web
+
+Para usuarios que prefieren una interfaz gráfica, también incluimos una aplicación web moderna y fácil de usar:
+
+#### Inicio rápido
+```bash
+# Opción 1: Script automático (Linux/macOS)
+cd web
+./start.sh
+
+# Opción 2: Manual
+pip install -r requirements.txt
+cd web
+python app.py
+```
+
+Luego abre tu navegador en: **http://localhost:5001**
+
+#### Características de la interfaz web:
+- 🎨 **Diseño moderno** con Bootstrap y animaciones suaves
+- 📱 **Totalmente responsive** - funciona en móviles y tablets
+- 🖱️ **Drag & drop** - arrastra archivos directamente
+- 📊 **Información en tiempo real** del archivo y progreso
+- 🎯 **Selección visual** de formatos de audio y video
+- ⚙️ **Control de calidad** con opciones predefinidas
+- 📥 **Descarga directa** del archivo convertido
+- 🚫 **Manejo de errores** con mensajes claros
+
+### 📋 Opciones de CLI
 
 ```
 -i, --input       Archivo de audio o video de entrada (requerido)
@@ -153,7 +193,7 @@ Si hay errores específicos de FFmpeg, el script mostrará el mensaje de error d
 
 ## 🎯 Características
 
-- ✨ Interfaz CLI intuitiva y fácil de usar
+- ✨ **Doble interfaz**: CLI para usuarios avanzados y Web para facilidad de uso
 - 🎵 Conversión completa entre formatos de audio (7 formatos)
 - 🎥 Conversión completa entre formatos de video (8 formatos)
 - 🔍 Detección automática del tipo de media (audio/video)
@@ -161,6 +201,8 @@ Si hay errores específicos de FFmpeg, el script mostrará el mensaje de error d
 - 📊 Información del archivo resultante con tamaño
 - ❌ Manejo de errores robusto y verificación automática
 - 🔧 Basado en FFmpeg para máxima compatibilidad y calidad
+- 🌐 Interfaz web moderna con drag & drop
+- 📱 Diseño responsive que funciona en todos los dispositivos
 - 🚀 Perfecto para creadores de contenido, desarrolladores y podcasters
 
 ## 🗺️ Roadmap
@@ -173,12 +215,15 @@ Si hay errores específicos de FFmpeg, el script mostrará el mensaje de error d
 - [x] Detección automática de tipo de media
 - [x] Interfaz CLI completa
 - [x] Manejo de errores robusto
+- [x] Interfaz web moderna y responsive
+- [x] Drag & drop para subida de archivos
+- [x] Descarga directa de archivos convertidos
 
 ### 🚧 Versión 2.0 (En desarrollo)
 - [ ] Conversión por lotes (batch processing)
 - [ ] Presets predefinidos para casos comunes
-- [ ] Interfaz web opcional
 - [ ] Compresión inteligente automática
+- [ ] API REST para integración con otras aplicaciones
 
 ### 🔮 Futuras versiones
 - [ ] Soporte para subtítulos

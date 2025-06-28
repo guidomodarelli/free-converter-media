@@ -319,6 +319,12 @@ processing/
 output/
 converted/
 
+# Archivos de la interfaz web
+web/uploads/
+web/downloads/
+uploads/
+downloads/
+
 # Archivos de respaldo
 *.bak
 *.backup
